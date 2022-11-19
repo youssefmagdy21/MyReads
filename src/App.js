@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import "./App.css";
 import BookList from "./components/BookList";
 import * as BooksAPI from "./BooksAPI";
+import { Routes, Route } from "react-router-dom";
 function App() {
   const [bookList, setBookList] = useState([]);
 
@@ -29,12 +30,19 @@ function App() {
   };
   return (
     <div className="app">
-      <div className="list-books">
-        <div className="list-books-title">
-          <h1>MyReads</h1>
-        </div>
-        <BookList bookList={bookList} selectNewShelf={selectNewShelf} />
-      </div>
+      <Routes>
+        {/* start default page */}
+        <Route
+          path="/"
+          element={
+            <BookList bookList={bookList} selectNewShelf={selectNewShelf} />
+          }
+        ></Route>
+        {/* end default page */}
+        {/* start search page */}
+        <Route path="search" element={<h1>Search</h1>}></Route>
+        {/* end search page */}
+      </Routes>
     </div>
   );
 }
@@ -257,6 +265,7 @@ export default App;
 //         </div>
 //       </div>
 //     </div>
+
 //     <div className="open-search">
 //       <a onClick={() => setShowSearchpage(!showSearchPage)}>Add a book</a>
 //     </div>
