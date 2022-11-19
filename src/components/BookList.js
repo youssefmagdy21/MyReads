@@ -1,6 +1,6 @@
 import BookShelf from "./BookShelf";
 
-const BookList = ({ bookList }) => {
+const BookList = ({ bookList, selectNewShelf }) => {
   const currentlyReading = [],
     wantToRead = [],
     read = [];
@@ -16,9 +16,21 @@ const BookList = ({ bookList }) => {
   return (
     <div className="list-books-content">
       <div>
-        <BookShelf title="Currently Reading" bookList={currentlyReading} />
-        <BookShelf title="Want To Read" bookList={wantToRead} />
-        <BookShelf title="Read" bookList={read} />
+        <BookShelf
+          title="Currently Reading"
+          bookList={currentlyReading}
+          selectNewShelf={selectNewShelf}
+        />
+        <BookShelf
+          title="Want To Read"
+          bookList={wantToRead}
+          selectNewShelf={selectNewShelf}
+        />
+        <BookShelf
+          title="Read"
+          bookList={read}
+          selectNewShelf={selectNewShelf}
+        />
       </div>
     </div>
   );

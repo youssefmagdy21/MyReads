@@ -1,56 +1,39 @@
+import { useEffect, useState } from "react";
 import "./App.css";
 import BookList from "./components/BookList";
-// import * as BooksAPI from "./BooksAPI";
+import * as BooksAPI from "./BooksAPI";
 function App() {
-  const bookList = [
-    {
-      title: "The Linux Command Line",
-      authors: ["William E. Shotts, Jr."],
-      thumbnail:
-        "http://books.google.com/books/content?id=nggnmAEACAAJ&printsec=frontcover&img=1&zoom=1&source=gbs_api",
-      id: "nggnmAEACAAJ",
-      shelf: "currentlyReading",
-    },
-    {
-      title: "Learning Web Development with React and Bootstrap",
-      authors: ["Harmeet Singh", "Mehul Bhatt"],
-      thumbnail:
-        "http://books.google.com/books/content?id=sJf1vQAACAAJ&printsec=frontcover&img=1&zoom=1&source=gbs_api",
-      id: "sJf1vQAACAAJ",
-      shelf: "currentlyReading",
-    },
-    {
-      title: "The Cuckoo's Calling",
-      authors: ["Robert Galbraith"],
-      thumbnail:
-        "http://books.google.com/books/content?id=evuwdDLfAyYC&printsec=frontcover&img=1&zoom=1&edge=curl&source=gbs_api",
-      id: "evuwdDLfAyYC",
-      shelf: "wantToRead",
-    },
-    {
-      title: "React",
-      authors: ["Nils Hartmann", "Oliver Zeigermann"],
-      thumbnail:
-        "http://books.google.com/books/content?id=IOejDAAAQBAJ&printsec=frontcover&img=1&zoom=1&source=gbs_api",
-      id: "IOejDAAAQBAJ",
-      shelf: "read",
-    },
-    {
-      title: "Satire TV",
-      authors: ["Jonathan Gray", "Jeffrey P. Jones", "Ethan Thompson"],
-      thumbnail:
-        "http://books.google.com/books/content?id=1wy49i-gQjIC&printsec=frontcover&img=1&zoom=1&edge=curl&source=gbs_api",
-      id: "1wy49i-gQjIC",
-      shelf: "read",
-    },
-  ];
+  const [bookList, setBookList] = useState([]);
+
+  useEffect(() => {
+    BooksAPI.getAll().then((res) => {
+      console.log(res);
+      setBookList(res);
+    });
+  }, []);
+
+  const selectNewShelf = (e, book) => {
+    console.log("i changed ", book.title, " to ", e.target.value);
+    const newShelf = e.target.value;
+    // updating the backend
+    BooksAPI.update(book, newShelf);
+    // updating the frontend
+    setBookList((prevBookList) => {
+      return prevBookList.map((ele) => {
+        if (ele.id === book.id) {
+          return { ...ele, shelf: newShelf };
+        }
+        return ele;
+      });
+    });
+  };
   return (
     <div className="app">
       <div className="list-books">
         <div className="list-books-title">
           <h1>MyReads</h1>
         </div>
-        <BookList bookList={bookList} />
+        <BookList bookList={bookList} selectNewShelf={selectNewShelf} />
       </div>
     </div>
   );

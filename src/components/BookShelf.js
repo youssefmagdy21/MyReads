@@ -1,14 +1,10 @@
 import Book from "./Book";
 
-const BookShelf = ({ title, bookList }) => {
+const BookShelf = ({ title, bookList, selectNewShelf }) => {
   const books = bookList.map((book) => {
     return (
       <li key={book.id}>
-        <Book
-          title={book.title}
-          thumbnail={book.thumbnail}
-          authors={book.authors}
-        />
+        <Book book={book} selectNewShelf={selectNewShelf} />
       </li>
     );
   });

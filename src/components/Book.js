@@ -1,4 +1,4 @@
-const Book = ({ title, thumbnail, authors }) => {
+const Book = ({ book, selectNewShelf }) => {
   return (
     <div>
       <div className="book">
@@ -8,26 +8,29 @@ const Book = ({ title, thumbnail, authors }) => {
             style={{
               width: 128,
               height: 193,
-              backgroundImage: `url(${thumbnail})`,
+              backgroundImage: `url(${book.imageLinks.thumbnail})`,
             }}
           ></div>
+          <div className="book-shelf-changer">
+            <select
+              value={book.shelf}
+              onChange={(e) => selectNewShelf(e, book)}
+            >
+              <option value="none" disabled>
+                Move to...
+              </option>
+              <option value="currentlyReading">Currently Reading</option>
+              <option value="wantToRead">Want to Read</option>
+              <option value="read">Read</option>
+              <option value="none">None</option>
+            </select>
+          </div>
         </div>
-        <div className="book-title">{title}</div>
-        <div className="book-authors">{authors.join(", ")}</div>
+        <div className="book-title">{book.title}</div>
+        <div className="book-authors">{book.authors.join(", ")}</div>
       </div>
     </div>
   );
 };
 
 export default Book;
-// {/* <div className="book-shelf-changer">
-//             <select>
-//               <option value="none" disabled>
-//                 Move to...
-//               </option>
-//               <option value="currentlyReading">Currently Reading</option>
-//               <option value="wantToRead">Want to Read</option>
-//               <option value="read">Read</option>
-//               <option value="none">None</option>
-//             </select>
-//           </div> */}
