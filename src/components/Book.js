@@ -13,7 +13,7 @@ const Book = ({ book, selectNewShelf }) => {
           ></div>
           <div className="book-shelf-changer">
             <select
-              value={book.shelf}
+              value={book.shelf || "none"}
               onChange={(e) => selectNewShelf(e, book)}
             >
               <option value="none" disabled>
@@ -27,7 +27,7 @@ const Book = ({ book, selectNewShelf }) => {
           </div>
         </div>
         <div className="book-title">{book.title}</div>
-        <div className="book-authors">{book.authors.join(", ")}</div>
+        <div className="book-authors">{book.authors?.join(", ")}</div>
       </div>
     </div>
   );
