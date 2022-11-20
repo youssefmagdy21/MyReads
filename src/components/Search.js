@@ -2,12 +2,15 @@ import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import * as BooksAPI from "../BooksAPI";
 import Book from "./Book";
+
 const Search = ({ bookList, selectNewShelf, addNewBook }) => {
   const [searchQuery, setSearchQuery] = useState("");
   const [searchResults, setSearchResults] = useState([]);
+
   const handleSearchQueryChange = (e) => {
     setSearchQuery(e.target.value);
   };
+
   useEffect(() => {
     if (searchQuery !== "") {
       BooksAPI.search(searchQuery, 20).then((res) => {
@@ -16,36 +19,10 @@ const Search = ({ bookList, selectNewShelf, addNewBook }) => {
           setSearchResults([]);
           return;
         }
-        console.log("current ", searchQuery);
-        console.log(res);
-        // const showList = getExistingBook(res);
-        // console.log(getExistingBook(showList));
         setSearchResults(res);
       });
     }
   }, [searchQuery]);
-
-  // const getExistingBook = (list) => {
-  //   return list.map((ele) => {
-  //     let tmpBook = {};
-  //     for (let i = 0; i < bookList.length; i++) {
-  //       if (ele.id === bookList[i].id) {
-  //         tmpBook = { ...bookList[i] };
-  //         break;
-  //       }
-  //       tmpBook = { ...ele };
-  //     }
-  //     return tmpBook;
-  //   });
-  // };
-  // console.log(getExistingBook());
-  // const showSearchResults = searchResults.map((book) => {
-  //   return (
-  //     <li key={book.id}>
-  //       <Book book={book} />
-  //     </li>
-  //   );
-  // });
 
   return (
     <div className="search-books">

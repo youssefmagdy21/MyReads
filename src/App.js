@@ -4,18 +4,17 @@ import BookList from "./components/BookList";
 import * as BooksAPI from "./BooksAPI";
 import { Routes, Route } from "react-router-dom";
 import Search from "./components/Search";
+
 function App() {
   const [bookList, setBookList] = useState([]);
 
   useEffect(() => {
     BooksAPI.getAll().then((res) => {
-      console.log(res);
       setBookList(res);
     });
   }, []);
 
   const selectNewShelf = (e, book) => {
-    console.log("i changed ", book.title, " to ", e.target.value);
     const newShelf = e.target.value;
     // updating the backend
     BooksAPI.update(book, newShelf);
@@ -30,7 +29,6 @@ function App() {
     });
   };
   const addNewBook = (e, book) => {
-    console.log("i was added ", book.title, " to ", e.target.value);
     const newShelf = e.target.value;
     // updating the backend
     BooksAPI.update(book, newShelf);
@@ -42,15 +40,12 @@ function App() {
   return (
     <div className="app">
       <Routes>
-        {/* start default page */}
         <Route
           path="/"
           element={
             <BookList bookList={bookList} selectNewShelf={selectNewShelf} />
           }
         ></Route>
-        {/* end default page */}
-        {/* start search page */}
         <Route
           path="search"
           element={
@@ -61,7 +56,6 @@ function App() {
             />
           }
         ></Route>
-        {/* end search page */}
       </Routes>
     </div>
   );
