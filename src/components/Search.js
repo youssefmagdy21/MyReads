@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import * as BooksAPI from "../BooksAPI";
 import Book from "./Book";
-const Search = ({ bookList }) => {
+const Search = ({ bookList, selectNewShelf, addNewBook }) => {
   const [searchQuery, setSearchQuery] = useState("");
   const [searchResults, setSearchResults] = useState([]);
   const handleSearchQueryChange = (e) => {
@@ -67,16 +67,21 @@ const Search = ({ bookList }) => {
           {searchQuery !== "" ? (
             searchResults.map((ele) => {
               let book = {};
+              let isNewBook = true;
               for (let i = 0; i < bookList.length; i++) {
                 if (ele.id === bookList[i].id) {
                   book = { ...bookList[i] };
+                  isNewBook = false;
                   break;
                 }
                 book = { ...ele };
               }
               return (
                 <li key={book.id}>
-                  <Book book={book} />
+                  <Book
+                    book={book}
+                    selectNewShelf={isNewBook ? addNewBook : selectNewShelf}
+                  />
                 </li>
               );
             })

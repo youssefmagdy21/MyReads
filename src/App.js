@@ -29,6 +29,16 @@ function App() {
       });
     });
   };
+  const addNewBook = (e, book) => {
+    console.log("i was added ", book.title, " to ", e.target.value);
+    const newShelf = e.target.value;
+    // updating the backend
+    BooksAPI.update(book, newShelf);
+    // updating the frontend
+    setBookList((prevBookList) => {
+      return [...prevBookList, { ...book, shelf: newShelf }];
+    });
+  };
   return (
     <div className="app">
       <Routes>
@@ -41,7 +51,16 @@ function App() {
         ></Route>
         {/* end default page */}
         {/* start search page */}
-        <Route path="search" element={<Search bookList={bookList} />}></Route>
+        <Route
+          path="search"
+          element={
+            <Search
+              bookList={bookList}
+              addNewBook={addNewBook}
+              selectNewShelf={selectNewShelf}
+            />
+          }
+        ></Route>
         {/* end search page */}
       </Routes>
     </div>
