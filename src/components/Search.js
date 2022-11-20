@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import * as BooksAPI from "../BooksAPI";
 import Book from "./Book";
-const Search = () => {
+const Search = ({ bookList }) => {
   const [searchQuery, setSearchQuery] = useState("");
   const [searchResults, setSearchResults] = useState([]);
   const handleSearchQueryChange = (e) => {
@@ -18,11 +18,27 @@ const Search = () => {
         }
         console.log("current ", searchQuery);
         console.log(res);
+        // const showList = getExistingBook(res);
+        // console.log(getExistingBook(showList));
         setSearchResults(res);
       });
     }
   }, [searchQuery]);
 
+  // const getExistingBook = (list) => {
+  //   return list.map((ele) => {
+  //     let tmpBook = {};
+  //     for (let i = 0; i < bookList.length; i++) {
+  //       if (ele.id === bookList[i].id) {
+  //         tmpBook = { ...bookList[i] };
+  //         break;
+  //       }
+  //       tmpBook = { ...ele };
+  //     }
+  //     return tmpBook;
+  //   });
+  // };
+  // console.log(getExistingBook());
   // const showSearchResults = searchResults.map((book) => {
   //   return (
   //     <li key={book.id}>
@@ -49,7 +65,15 @@ const Search = () => {
       <div className="search-books-results">
         <ol className="books-grid">
           {searchQuery !== "" ? (
-            searchResults.map((book) => {
+            searchResults.map((ele) => {
+              let book = {};
+              for (let i = 0; i < bookList.length; i++) {
+                if (ele.id === bookList[i].id) {
+                  book = { ...bookList[i] };
+                  break;
+                }
+                book = { ...ele };
+              }
               return (
                 <li key={book.id}>
                   <Book book={book} />

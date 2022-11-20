@@ -41,7 +41,7 @@ function App() {
         ></Route>
         {/* end default page */}
         {/* start search page */}
-        <Route path="search" element={<Search />}></Route>
+        <Route path="search" element={<Search bookList={bookList} />}></Route>
         {/* end search page */}
       </Routes>
     </div>
